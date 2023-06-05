@@ -3,7 +3,6 @@ import base64
 from PIL import Image
 from io import BytesIO
 import socket
-import qrcode
 
 app = Flask(__name__)
 clipboard_data = []
@@ -11,23 +10,7 @@ port_number=5000
 
 @app.route('/')
 def home():
-    # Get the IP address of the server
-    ip_address = socket.gethostbyname(socket.gethostname())
-    ip_address = "http://"+ip_address+":{}/static/screenshot.png".format(port_number)
-    # Generate a QR code for the IP address
-    qr = qrcode.QRCode()
-    qr.add_data(ip_address)
-    qr.make()
-
-    # Create a BytesIO object to save the QR code image
-    qr_image = BytesIO()
-    qr.make_image().save(qr_image, 'PNG')
-
-    # Encode the QR code image as a base64 string
-    qr_base64 = base64.b64encode(qr_image.getvalue()).decode('utf-8')
-
-    # Render the template with clipboard items, IP address, and QR code
-    return render_template('index.html', clipboard_items=clipboard_data, ip_address=ip_address, qr_code=qr_base64)
+    return render_template('index.html', clipboard_items=clipboard_data)
 
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
