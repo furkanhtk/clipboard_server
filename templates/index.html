@@ -1,9 +1,0 @@
-<h2>Clipboard Items:</h2>
-<ul>
-    {% for item in clipboard_items %}
-        <li>{{ item }}</li>
-    {% endfor %}
-</ul>
-
-<h2>Screenshot:</h2>
-<img src="{{ url_for('static', filename='screenshot.png') }}" alt="Screenshot">
