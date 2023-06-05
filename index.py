@@ -31,7 +31,7 @@ def clipboard():
     screenshot_image = Image.open(BytesIO(screenshot_bytes))
 
     # Save the screenshot image to a file
-    screenshot_path = "static/screenshot.png"
+    screenshot_path = "tmp/screenshot.png"
     screenshot_image.save(screenshot_path)
 
     return "Clipboard data and screenshot updated successfully!"
