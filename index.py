@@ -7,7 +7,7 @@ import socket
 app = Flask(__name__)
 clipboard_data = []
 port_number=5000
-
+app.static_folder = 'tmp'
 
 @app.route('/')
 def hello_world():
