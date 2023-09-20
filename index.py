@@ -39,3 +39,7 @@ def clipboard():
 @app.route('/check_connection')
 def check_connection():
     return jsonify({'status': 'online'})
+
+
+if __name__ == '__main__':
+   app.run()
