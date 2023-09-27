@@ -41,11 +41,11 @@ def paste_text():
 
     return jsonify({'clipboard_data': clipboard_data}), 200
 
-@app.route('/screenshotpaste', methods=['GET'])
-def paste_text():
-    global msg_screenshot
+# @app.route('/screenshotpaste', methods=['GET'])
+# def paste_text():
+#     global msg_screenshot
 
-    return jsonify({'screenshot_base64': msg_screenshot}), 200
+#     return jsonify({'screenshot_base64': msg_screenshot}), 200
 
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
