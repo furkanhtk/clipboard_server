@@ -1,7 +1,6 @@
 import os
 import base64
-from PIL import Image
-from io import BytesIO
+
 
 from flask import (Flask, redirect, render_template, request, jsonify,
                    send_from_directory, url_for)
@@ -12,6 +11,7 @@ app.static_folder = 'tmp'
 
 clipboard_data = ""
 clipboard_array = []
+
 
 
 @app.route('/')
@@ -53,11 +53,11 @@ def clipboard():
 
     # Convert the screenshot from base64 to PIL Image
     screenshot_bytes = base64.b64decode(screenshot_base64)
-    screenshot_image = Image.open(BytesIO(screenshot_bytes))
+    # screenshot_image = Image.open(BytesIO(screenshot_bytes))
 
-    # Save the screenshot image to a file
-    screenshot_path = "/tmp/screenshot.png"
-    screenshot_image.save(screenshot_path)
+    # # Save the screenshot image to a file
+    # screenshot_path = "/tmp/screenshot.png"
+    # screenshot_image.save(screenshot_path)
 
     return "Clipboard data and screenshot updated successfully!"
 
