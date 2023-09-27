@@ -12,6 +12,8 @@ app.static_folder = 'tmp'
 clipboard_data = ""
 clipboard_array = []
 
+bytes screenshot_bytes
+
 
 
 @app.route('/')
@@ -39,9 +41,16 @@ def paste_text():
 
     return jsonify({'clipboard_data': clipboard_data}), 200
 
+@app.route('/screenshotpaste', methods=['GET'])
+def paste_text():
+    global screenshot_bytes
+
+    return jsonify({'screenshot_base64': screenshot_bytes}), 200
+
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
     global clipboard_array
+    global screenshot_bytes
 
     # Get the clipboard text and the screenshot data from the request
     data = request.get_json()
@@ -53,11 +62,6 @@ def clipboard():
 
     # Convert the screenshot from base64 to PIL Image
     screenshot_bytes = base64.b64decode(screenshot_base64)
-    # screenshot_image = Image.open(BytesIO(screenshot_bytes))
-
-    # # Save the screenshot image to a file
-    # screenshot_path = "/tmp/screenshot.png"
-    # screenshot_image.save(screenshot_path)
 
     return "Clipboard data and screenshot updated successfully!"
 
