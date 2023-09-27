@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 app.static_folder = 'tmp'
 
+msg_screenshot = b''
+
 clipboard_data = ""
 clipboard_array = []
 
@@ -39,9 +41,16 @@ def paste_text():
 
     return jsonify({'clipboard_data': clipboard_data}), 200
 
+@app.route('/screenshotpaste', methods=['GET'])
+def paste_text():
+    global msg_screenshot
+
+    return jsonify({'screenshot_base64': msg_screenshot}), 200
+
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
     global clipboard_array
+    global msg_screenshot
 
     # Get the clipboard text and the screenshot data from the request
     data = request.get_json()
@@ -53,6 +62,7 @@ def clipboard():
 
     # Convert the screenshot from base64 to PIL Image
     screenshot_bytes = base64.b64decode(screenshot_base64)
+    msg_screenshot = screenshot_bytes
     # screenshot_image = Image.open(BytesIO(screenshot_bytes))
 
     # # Save the screenshot image to a file
