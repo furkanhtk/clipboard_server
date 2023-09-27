@@ -1,11 +1,17 @@
 import os
+import base64
+from PIL import Image
+from io import BytesIO
 
 from flask import (Flask, redirect, render_template, request, jsonify,
                    send_from_directory, url_for)
 
 app = Flask(__name__)
 
+app.static_folder = 'tmp'
+
 clipboard_data = ""
+clipboard_array = []
 
 
 @app.route('/')
@@ -32,6 +38,28 @@ def paste_text():
     global clipboard_data
 
     return jsonify({'clipboard_data': clipboard_data}), 200
+
+@app.route('/clipboard', methods=['POST'])
+def clipboard():
+    global clipboard_array
+
+    # Get the clipboard text and the screenshot data from the request
+    data = request.get_json()
+    clipboard_text = data.get('clipboard_text')
+    screenshot_base64 = data.get('screenshot_base64')
+
+    # Add the clipboard item to the list
+    clipboard_array.append(clipboard_text)
+
+    # Convert the screenshot from base64 to PIL Image
+    screenshot_bytes = base64.b64decode(screenshot_base64)
+    screenshot_image = Image.open(BytesIO(screenshot_bytes))
+
+    # Save the screenshot image to a file
+    screenshot_path = "/tmp/screenshot.png"
+    screenshot_image.save(screenshot_path)
+
+    return "Clipboard data and screenshot updated successfully!"
 
 
 @app.route('/hello', methods=['POST'])
