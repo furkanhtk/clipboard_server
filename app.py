@@ -45,7 +45,8 @@ def paste_text():
 def paste_screenshot():
     global msg_screenshot
 
-    return jsonify({'screenshot_base64': msg_screenshot}), 200
+    screenshot_base64_sent = base64.b64encode(msg_screenshot).decode('utf-8')
+    return jsonify({'screenshot_base64': screenshot_base64_sent}), 200
 
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
