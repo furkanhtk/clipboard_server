@@ -31,7 +31,7 @@ def index():
 def copy_text():
     global clipboard_data
     data = request.json
-    clipboard_data = data.get('clipboard_data')
+    clipboard_data = data.get('clipboard_text')
 
     return jsonify({'message': 'Clipboard data received successfully'}), 200
 
@@ -51,7 +51,7 @@ def pastetotal():
     elif(type_data == 2):
         payload = {
             'type_data': 2,
-            'clipboard_data': clipboard_data,
+            'clipboard_text': clipboard_data,
         }
     return jsonify(payload), 200
 
@@ -60,7 +60,7 @@ def pastetotal():
 def paste_text():
     global clipboard_data
 
-    return jsonify({'clipboard_data': clipboard_data}), 200
+    return jsonify({'clipboard_text': clipboard_data}), 200
 
 @app.route('/screenshotpaste', methods=['GET'])
 def paste_screenshot():
