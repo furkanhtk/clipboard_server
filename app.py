@@ -45,8 +45,8 @@ def paste_text():
 def paste_screenshot():
     global msg_screenshot
 
-    screenshot_base64_sent = base64.b64encode(msg_screenshot).decode('utf-8')
-    return jsonify({'screenshot_base64': screenshot_base64_sent}), 200
+    # screenshot_base64_sent = base64.b64encode(msg_screenshot).decode('utf-8')
+    return jsonify({'screenshot_base64': msg_screenshot}), 200
 
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
@@ -62,8 +62,8 @@ def clipboard():
     clipboard_array.append(clipboard_text)
 
     # Convert the screenshot from base64 to PIL Image
-    screenshot_bytes = base64.b64decode(screenshot_base64)
-    msg_screenshot = screenshot_bytes
+    # screenshot_bytes = base64.b64decode(screenshot_base64)
+    msg_screenshot = screenshot_base64
     # screenshot_image = Image.open(BytesIO(screenshot_bytes))
 
     # # Save the screenshot image to a file
