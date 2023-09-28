@@ -36,7 +36,7 @@ def copy_text():
     return jsonify({'message': 'Clipboard data received successfully'}), 200
 
 @app.route('/pastetotal', methods=['GET'])
-def paste_text():
+def pastetotal():
     global clipboard_data
     global msg_screenshot
     global type_data
