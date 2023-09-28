@@ -27,13 +27,13 @@ def index():
 #     return send_from_directory(os.path.join(app.root_path, 'static'),
 #                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-@app.route('/copy', methods=['POST'])
-def copy_text():
-    global clipboard_data
-    data = request.json
-    clipboard_data = data.get('clipboard_text')
+# @app.route('/copy', methods=['POST'])
+# def copy_text():
+#     global clipboard_data
+#     data = request.json
+#     clipboard_data = data.get('clipboard_text')
 
-    return jsonify({'message': 'Clipboard data received successfully'}), 200
+#     return jsonify({'message': 'Clipboard data received successfully'}), 200
 
 @app.route('/pastetotal', methods=['GET'])
 def pastetotal():
@@ -56,33 +56,34 @@ def pastetotal():
     return jsonify(payload), 200
 
 
-@app.route('/paste', methods=['GET'])
-def paste_text():
-    global clipboard_data
+# @app.route('/paste', methods=['GET'])
+# def paste_text():
+#     global clipboard_data
 
-    return jsonify({'clipboard_text': clipboard_data}), 200
+#     return jsonify({'clipboard_text': clipboard_data}), 200
 
-@app.route('/screenshotpaste', methods=['GET'])
-def paste_screenshot():
-    global msg_screenshot
+# @app.route('/screenshotpaste', methods=['GET'])
+# def paste_screenshot():
+#     global msg_screenshot
 
-    # screenshot_base64_sent = base64.b64encode(msg_screenshot).decode('utf-8')
-    return jsonify({'screenshot_base64': msg_screenshot}), 200
+#     # screenshot_base64_sent = base64.b64encode(msg_screenshot).decode('utf-8')
+#     return jsonify({'screenshot_base64': msg_screenshot}), 200
 
 @app.route('/clipboard', methods=['POST'])
 def clipboard():
     global clipboard_array
+    global clipboard_data
     global msg_screenshot
     global type_data
 
     # Get the clipboard text and the screenshot data from the request
     data = request.get_json()
-    clipboard_text = data.get('clipboard_text')
+    clipboard_data = data.get('clipboard_text')
     screenshot_base64 = data.get('screenshot_base64')
     type_data = data.get('type_data')
 
     # Add the clipboard item to the list
-    clipboard_array.append(clipboard_text)
+    clipboard_array.append(clipboard_data)
 
     # Convert the screenshot from base64 to PIL Image
     # screenshot_bytes = base64.b64decode(screenshot_base64)
