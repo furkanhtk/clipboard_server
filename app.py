@@ -14,6 +14,7 @@ msg_screenshot = b''
 clipboard_data = ""
 clipboard_array = []
 
+type_data = 0
 
 
 @app.route('/')
@@ -34,6 +35,26 @@ def copy_text():
 
     return jsonify({'message': 'Clipboard data received successfully'}), 200
 
+@app.route('/pastetotal', methods=['GET'])
+def paste_text():
+    global clipboard_data
+    global msg_screenshot
+    global type_data
+
+    # Image
+    if(type_data == 1):
+        payload = {
+            'type_data': 1,
+            'screenshot_base64': msg_screenshot,
+        }
+    #Text
+    elif(type_data == 2):
+        payload = {
+            'type_data': 2,
+            'clipboard_data': clipboard_data,
+        }
+    return jsonify(payload), 200
+
 
 @app.route('/paste', methods=['GET'])
 def paste_text():
@@ -52,11 +73,13 @@ def paste_screenshot():
 def clipboard():
     global clipboard_array
     global msg_screenshot
+    global type_data
 
     # Get the clipboard text and the screenshot data from the request
     data = request.get_json()
     clipboard_text = data.get('clipboard_text')
     screenshot_base64 = data.get('screenshot_base64')
+    type_data = data.get('type_data')
 
     # Add the clipboard item to the list
     clipboard_array.append(clipboard_text)
